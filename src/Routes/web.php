@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'web'], function () {
+Route::group( config('chatter.routing'), function () {
 
 	$chatter_url = Config::get('chatter.routes.home');
 	Route::get($chatter_url, 'DevDojo\Chatter\Controllers\ChatterController@index');
