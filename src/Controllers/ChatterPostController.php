@@ -59,7 +59,8 @@ class ChatterPostController extends Controller
                 $minute_copy = (config('chatter.security.time_between_posts') == 1) ? ' minute' : ' minutes';
                 $chatter_alert = array(
                     'chatter_alert_type' => 'danger',
-                    'chatter_alert' => 'In order to prevent spam, Please allow at least ' . config('chatter.security.time_between_posts') . $minute_copy . ' inbetween submitting content.'
+                    'chatter_alert' => config('chatter.messages.alerts.prevent_spam') . config('chatter.security.time_between_posts')
+                    //'chatter_alert' => 'In order to prevent spam, Please allow at least ' . config('chatter.security.time_between_posts') . $minute_copy . ' inbetween submitting content.'                    
                     );
                 return back()->with($chatter_alert)->withInput();
             }
@@ -81,13 +82,15 @@ class ChatterPostController extends Controller
             }
             $chatter_alert = array(
                 'chatter_alert_type' => 'success',
-                'chatter_alert' => 'Response successfully submitted to ' . config('chatter.titles.discussion') . '.'
+                'chatter_alert' => config('chatter.messages.alerts.comment_created')
+                //'chatter_alert' => 'Response successfully submitted to ' . config('chatter.titles.discussion') . '.'
                 );
             return redirect('/' . config('chatter.routes.home') . '/' . config('chatter.routes.discussion') . '/' . $category->slug . '/'  . $discussion->slug)->with($chatter_alert);
         } else {
             $chatter_alert = array(
                 'chatter_alert_type' => 'danger',
-                'chatter_alert' => 'Sorry, there seems to have been a problem submitting your response.'
+                'chatter_alert' => config('chatter.messages.alerts.comment_creation_problem')
+                //'chatter_alert' => 'Sorry, there seems to have been a problem submitting your response.'
                 );
             return redirect('/' . config('chatter.routes.home') . '/' . config('chatter.routes.discussion') . '/' . $category->slug . '/' . $discussion->slug)->with($chatter_alert);
         }   
@@ -141,7 +144,8 @@ class ChatterPostController extends Controller
 
             $chatter_alert = array(
                 'chatter_alert_type' => 'success',
-                'chatter_alert' => 'Successfully updated the ' . config('chatter.titles.discussion') . '.'
+                'chatter_alert' => config('chatter.messages.alerts.discussion_updated')
+                //'chatter_alert' => 'Successfully updated the ' . config('chatter.titles.discussion') . '.'
                 );
             return redirect('/' . config('chatter.routes.home') . '/' . config('chatter.routes.discussion') . '/' . $category->slug . '/' . $discussion->slug)->with($chatter_alert);
 
@@ -149,7 +153,8 @@ class ChatterPostController extends Controller
 
             $chatter_alert = array(
                 'chatter_alert_type' => 'danger',
-                'chatter_alert' => 'Nah ah ah... Could not update your response. Make sure you\'re not doing anything shady.'
+                'chatter_alert' => config('chatter.messages.alerts.discussion_update_error')
+                //'chatter_alert' => 'Nah ah ah... Could not update your response. Make sure you\'re not doing anything shady.'
                 );
             return redirect('/' . config('chatter.routes.home'))->with($chatter_alert);
 
@@ -178,7 +183,8 @@ class ChatterPostController extends Controller
 
                 $chatter_alert = array(
                     'chatter_alert_type' => 'success',
-                    'chatter_alert' => 'Successfully deleted response and ' . strtolower(config('chatter.titles.discussion')) . '.'
+                    'chatter_alert' => config('chatter.messages.alerts.discussion_removed')
+                    //'chatter_alert' => 'Successfully deleted response and ' . strtolower(config('chatter.titles.discussion')) . '.'
                 );
                 return redirect('/' . config('chatter.routes.home') )->with($chatter_alert);
 
@@ -186,7 +192,8 @@ class ChatterPostController extends Controller
 
                 $chatter_alert = array(
                     'chatter_alert_type' => 'success',
-                    'chatter_alert' => 'Successfully deleted response from the ' . config('chatter.titles.discussion') . '.'
+                    'chatter_alert' => config('chatter.messages.alerts.comment_removed')
+                    //'chatter_alert' => 'Successfully deleted response from the ' . config('chatter.titles.discussion') . '.'
                 );
                 return redirect('/' . config('chatter.routes.home') . '/' . config('chatter.routes.discussion') . '/' . $discussion->slug)->with($chatter_alert);
 
@@ -196,7 +203,8 @@ class ChatterPostController extends Controller
 
             $chatter_alert = array(
                 'chatter_alert_type' => 'danger',
-                'chatter_alert' => 'Nah ah ah... Could not delete the response. Make sure you\'re not doing anything shady.'
+                'chatter_alert' => config('chatter.messages.alerts.comment_remove_error')
+                //'chatter_alert' => 'Nah ah ah... Could not delete the response. Make sure you\'re not doing anything shady.'
                 );
             return redirect('/' . config('chatter.routes.home'))->with($chatter_alert);
 
